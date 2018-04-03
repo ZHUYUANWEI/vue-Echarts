@@ -53,12 +53,13 @@ export default {
                 },
                 grid: {
                     left: '10',
-                    right: '20',
-                    top: '10',
+                    right: '45',
+                    top: '35',
                     bottom: '10',
                     containLabel: true
                 },
                 xAxis: {
+                    name: '时间',
                     type: 'category',
                     boundaryGap: false,
                     axisLine: { // 坐标轴轴线相关设置
@@ -74,7 +75,7 @@ export default {
                     data: this.xData
                 },
                 yAxis: {
-                    // name: '人流(人)',
+                    name: '人次',
                     type: 'value',
                     axisLine: { // 坐标轴轴线相关设置
                         lineStyle: {
