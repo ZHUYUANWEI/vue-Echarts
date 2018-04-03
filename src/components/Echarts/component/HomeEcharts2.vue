@@ -1,4 +1,5 @@
 <template>
+<!-- 首页——今日入园车辆趋势 -->
 <div>
   <div id="HomeEcharts2" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>

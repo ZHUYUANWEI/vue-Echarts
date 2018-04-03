@@ -1,4 +1,5 @@
 <template>
+<!-- 管理看板——每月成交企业数 -->
 <div>
   <div id="KanbanEcharts3" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>

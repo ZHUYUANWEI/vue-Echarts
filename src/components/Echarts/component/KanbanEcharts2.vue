@@ -1,4 +1,5 @@
 <template>
+<!-- 管理看板——入驻行业分析 -->
 <div>
   <div id="KanbanEcharts2" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>

@@ -1,4 +1,5 @@
 <template>
+<!-- 管理看板——表格 -->
 <div>
   <div id="KanbanEcharts4" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>

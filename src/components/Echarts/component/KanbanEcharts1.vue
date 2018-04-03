@@ -1,4 +1,5 @@
 <template>
+<!-- 管理看板——招商客户分析 -->
 <div>
   <div id="KanbanEcharts1" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>

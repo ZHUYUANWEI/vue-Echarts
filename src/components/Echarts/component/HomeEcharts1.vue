@@ -1,4 +1,5 @@
 <template>
+<!-- 首页——今日入园人流趋势 -->
 <div>
   <div id="HomeEcharts1" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>
