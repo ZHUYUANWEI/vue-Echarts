@@ -5,8 +5,11 @@ import App from './App'
 import router from './router'
 import store from './store/store.js'
 import echarts from 'echarts'
+import axios from 'axios'
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
+Vue.prototype.$axios = axios
+axios.defaults.withCredentials = true
 
 /* eslint-disable no-new */
 new Vue({

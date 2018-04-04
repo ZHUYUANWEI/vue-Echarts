@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <router-link to="test">test</router-link>
-    <router-link to="Echarts">Echarts</router-link>
-    <router-link to="testEcharts">testEcharts</router-link>
+    <router-link to="test" style="margin:0 10px">父子组件传值演示</router-link>
+    <router-link to="Echarts" style="margin:0 10px">Echarts自定义组件</router-link>
+    <router-link to="testEcharts" style="margin:0 10px">Echarts地图</router-link>
     <router-view/>
   </div>
 </template>

@@ -1,21 +1,25 @@
 <template>
 <div>
   <div id="myChart" :style="{width: widthDiv ,height: heightDiv}"></div>
-  <div class="abc">123</div>
-  <!-- <button @click="aa">宽</button>
-  <button @click="bb">窄{{ratio}}</button> -->
 </div>
 </template>
 
 <script>
+import apiUrl from './../../../common/apiConfig.js'
+import imgUrl from './../../../common/imgConfig.js'
 export default {
     data () {
         return {
+            sendData: {
+                imgId: '8f7e2c4981da44d6be16827741836a2b',
+                codes: ['00', '04', '09']
+            },
             widthDiv: '100%',
             heightDiv: 'auto',
             widthChange: '', // 画布x轴
             heightChange: '', // 画布y轴
             imgName: '招商客户分析',
+            imgUrl: '',
             xMax: 45, // x轴最大坐标
             xMin: -244, // x轴最小坐标
             yMax: 130, // y轴最大坐标
@@ -23,65 +27,64 @@ export default {
             ratio: 0, // 高宽比.5159
             manholeCoverData: [
                 // 井盖
-                {
-                    value: [-117.4, 42.4],
-                    symbol: 'circle',
-                    symbolSize: 10
-                },
-                {
-                    value: [-107.9, 21],
-                    symbol: 'image://' + require('./../../../assets/images/icon.png'),
-                    symbolSize: 10,
-                    itemStyle: {
-                        normal: {
-                            color: '#999'
-                        }
-                    }
-                },
+                // {
+                //     value: [-117.4, 42.4],
+                //     symbol: 'circle',
+                //     symbolSize: 10
+                // },
+                // {
+                //     value: [-107.9, 21],
+                //     symbol: imgUrl.symbol.park0,
+                //     symbolSize: 10,
+                //     itemStyle: {
+                //         normal: {
+                //             color: '#999'
+                //         }
+                //     }
+                // },
 
-                // [-117.4, 42.4, '正常'],
-                // [-107.9, 21, '正常'],
-                [-110.7, 0.95, '正常'],
-                [-121.46, 11.8, '不正常'],
-                [-133.4, 25.9, '正常']
+                // // [-117.4, 42.4, '正常'],
+                // // [-107.9, 21, '正常'],
+                // [-110.7, 0.95, '正常'],
+                // [-121.46, 11.8, '不正常'],
+                // [-133.4, 25.9, '正常']
             ],
-
             trashData: [
                 // 垃圾桶
-                [-111.2, 13.2, '空'],
-                [-115.2, -1.8, '已满'],
-                [-124.9, 18.6, '三分之一'],
-                [-137, 30, '三分之一'],
-                [-132.6, 33.2, '三分之二']
+                // [-111.2, 13.2, '空'],
+                // [-115.2, -1.8, '已满'],
+                // [-124.9, 18.6, '三分之一'],
+                // [-137, 30, '三分之一'],
+                // [-132.6, 33.2, '三分之二']
             ],
-            parkData: [
-                // 停车位
-                [-100.3, 53, '已停车']
+            parkData: [ // 停车位
+                // {
+                //     value: [-100.3, 53],
+                //     symbol: imgUrl.symbol.park0
+                // }
+                // {
+                //     value: [-100.3, 53],
+                //     symbol: imgUrl.symbol.park0
+                // },
+                // {
+                //     value: [-50, 53],
+                //     symbol: imgUrl.symbol.park1
+                // }
             ],
             data: {}
         }
     },
-    // props: ['ratio22'],
     computed: {
     },
     mounted () {
-    // imgXaxisMax imgXaxisMin imgYaxisMax imgYaxisMin imgUrl
-        this.ratio =
-      Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
+        this.getNumber()
+        // a = setInterval(this.getNumber, 2000)
+        this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
         this.widthChange = document.getElementById('myChart').offsetWidth
-        this.heightChange =
-      document.getElementById('myChart').offsetWidth * this.ratio
+        this.heightChange = document.getElementById('myChart').offsetWidth * this.ratio
         this.heightDiv = this.heightChange + 'px'
         this.drawLine()
-        // 监听window的resize事件．在浏览器窗口变化时再设置下背景图高度．
         const that = this
-        // window.onresize = function () {
-        //   that.widthChange = document.getElementById('myChart').offsetWidth
-        //   that.heightChange = that.widthChange * that.ratio
-        //   that.heightDiv = that.heightChange + 'px'
-        //   // 浏览器大小改变时canvas重绘  that.myChart.resize()
-        //   that.drawLine()
-        // }
         window.addEventListener('resize', function () {
             // 多个图表时响应
             that.widthChange = document.getElementById('myChart').offsetWidth
@@ -93,6 +96,59 @@ export default {
     },
     created () {},
     methods: {
+        getNumber () {
+            var sendData = JSON.stringify(this.sendData)
+            this.$axios.post(apiUrl.loraShow, sendData, apiUrl.json)
+                .then(res => {
+                    console.log('成功', res.data)
+                    this.imgUrl = res.data.data.imgUrl
+                    this.xMax = res.data.data.imgXaxisMax
+                    this.xMin = res.data.data.imgXaxisMin
+                    this.yMax = res.data.data.imgYaxisMax
+                    this.yMin = res.data.data.imgYaxisMin
+                    // 停车场
+                    // const that = this
+                    res.data.data['00'].forEach((item, index, input) => {
+                        this.manholeCoverData[index] = {}
+                        this.manholeCoverData[index].value = []
+                        this.manholeCoverData[index].value = [item.xaxis, item.yaxis]
+                        if (item.alarmStatus === 1) {
+                            this.manholeCoverData[index].symbol = imgUrl.symbol.manholeCover0
+                        } else if (item.alarmStatus === 0) {
+                            this.manholeCoverData[index].symbol = imgUrl.symbol.manholeCover1
+                        }
+                    })
+                    res.data.data['09'].forEach((item, index, input) => {
+                        this.parkData[index] = {}
+                        this.parkData[index].value = []
+                        this.parkData[index].value = [item.xaxis, item.yaxis]
+                        if (item.parkingLotStatus === '55') {
+                            this.parkData[index].symbol = imgUrl.symbol.park0
+                        } else if (item.parkingLotStatus === 'aa') {
+                            this.parkData[index].symbol = imgUrl.symbol.park1
+                        }
+                    })
+                    res.data.data['04'].forEach((item, index, input) => {
+                        this.trashData[index] = {}
+                        this.trashData[index].value = []
+                        this.trashData[index].value = [item.xaxis, item.yaxis]
+                        if (item.unused < 0.33) {
+                            this.trashData[index].symbol = imgUrl.symbol.trash0
+                        } else if (item.unused < 0.66) {
+                            this.trashData[index].symbol = imgUrl.symbol.trash1
+                        } else if (item.unused < 1) {
+                            this.trashData[index].symbol = imgUrl.symbol.trash2
+                        }
+                    })
+                //   if (res.data.status_code !== '101') {
+                //     clearInterval(a)
+                //   }
+                })
+                .catch(err => {
+                    console.log('错误', err)
+                //   clearInterval(a)
+                })
+        },
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.myChart = this.$echarts.init(document.getElementById('myChart'))
@@ -141,7 +197,8 @@ export default {
                         type: 'image', // （背景图片）
                         z: -10,
                         style: {
-                            image: require('../../../assets/images/timg.jpg'),
+                            image: this.imgUrl,
+                            // image: require('../../../assets/images/timg.jpg'),
                             width: this.widthChange,
                             height: this.heightChange
                         }
@@ -196,11 +253,10 @@ export default {
                         name: '停车位',
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
-                        symbol:
-              'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z', // 标记的类型可以用矢量路径
+                        // symbol: 'path://M1705.06,1318.313v-89.254l', // 标记的类型可以用矢量路径
                         // 'rect','pin'
-                        // symbolSize: 10, // 标记大小
-                        symbolRotate: 35, // 标记的倾斜角度
+                        symbolSize: 10, // 标记大小
+                        // symbolRotate: 35, // 标记的倾斜角度
                         itemStyle: {
                             color: '#FCCC38'
                         },

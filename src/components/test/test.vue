@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="text-align: left;margin: 0 auto;max-width: 1000px;">
     <Test1 :projectId="projectIds"></Test1>
     <Test2 @transferUser="getUser"></Test2>
     <h3>用户名为：{{user}}</h3>
