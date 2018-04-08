@@ -25,65 +25,36 @@ export default {
             yMax: 130, // y轴最大坐标
             yMin: -19, // y轴最小坐标
             ratio: 0, // 高宽比.5159
-            manholeCoverData: [
-                // 井盖
-                // {
-                //     value: [-117.4, 42.4],
-                //     symbol: 'circle',
-                //     symbolSize: 10
-                // },
-                // {
-                //     value: [-107.9, 21],
-                //     symbol: imgUrl.symbol.park0,
-                //     symbolSize: 10,
-                //     itemStyle: {
-                //         normal: {
-                //             color: '#999'
-                //         }
-                //     }
-                // },
-
-                // // [-117.4, 42.4, '正常'],
-                // // [-107.9, 21, '正常'],
-                // [-110.7, 0.95, '正常'],
-                // [-121.46, 11.8, '不正常'],
-                // [-133.4, 25.9, '正常']
+            manholeCoverData: [ // 井盖
+                // [-117.4, 42.4],
+                // [-107.9, 21],
+                // [-110.7, 0.95],
+                // [-121.46, 11.8],
+                // [-133.4, 25.9]
             ],
-            trashData: [
-                // 垃圾桶
-                // [-111.2, 13.2, '空'],
-                // [-115.2, -1.8, '已满'],
-                // [-124.9, 18.6, '三分之一'],
-                // [-137, 30, '三分之一'],
-                // [-132.6, 33.2, '三分之二']
+            trashData: [ // 垃圾桶
+                // [-111.2, 13.2],
+                // [-115.2, -1.8],
+                // [-124.9, 18.6],
+                // [-137, 30],
+                // [-132.6, 33.2]
             ],
             parkData: [ // 停车位
-                // {
-                //     value: [-100.3, 53],
-                //     symbol: imgUrl.symbol.park0
-                // }
-                // {
-                //     value: [-100.3, 53],
-                //     symbol: imgUrl.symbol.park0
-                // },
-                // {
-                //     value: [-50, 53],
-                //     symbol: imgUrl.symbol.park1
-                // }
-            ],
-            data: {}
+                // [-100.3, 53]
+            ]
         }
     },
     computed: {
     },
     mounted () {
         this.getNumber()
+        setInterval(this.getNumber, 10000)
         // a = setInterval(this.getNumber, 2000)
         this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
         this.widthChange = document.getElementById('myChart').offsetWidth
         this.heightChange = document.getElementById('myChart').offsetWidth * this.ratio
         this.heightDiv = this.heightChange + 'px'
-        this.drawLine()
+        // this.drawLine()
         const that = this
         window.addEventListener('resize', function () {
             // 多个图表时响应
@@ -136,10 +107,11 @@ export default {
                             this.trashData[index].symbol = imgUrl.symbol.trash0
                         } else if (item.unused < 0.66) {
                             this.trashData[index].symbol = imgUrl.symbol.trash1
-                        } else if (item.unused < 1) {
+                        } else if (item.unused <= 1) {
                             this.trashData[index].symbol = imgUrl.symbol.trash2
                         }
                     })
+                    this.drawLine()
                 //   if (res.data.status_code !== '101') {
                 //     clearInterval(a)
                 //   }
@@ -209,29 +181,26 @@ export default {
                         name: '井盖',
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
-                        label: {
-                            // 图形上的文本标签
-                        },
-                        itemStyle: {
-                            // 图形样式
+                        symbolSize: 15, // 标记大小
+                        itemStyle: { // 图形样式
                             color: '#B6E620'
                         },
-                        emphasis: {
-                            // 高亮的图形和标签样式。
-                            label: {
-                                // 图形上的文本标签
-                                show: true,
-                                // formatter: '{@[2]}', // {c}
-                                formatter: function (param) {
-                                    return param.data[2]
-                                },
-                                // formatter: '{c}',
-                                position: 'top'
-                            },
-                            itemStyle: {
-                                // 图形样式
-                            }
-                        },
+                        // emphasis: {
+                        //     // 高亮的图形和标签样式。
+                        //     label: {
+                        //         // 图形上的文本标签
+                        //         show: true,
+                        //         // formatter: '{@[2]}', // {c}
+                        //         formatter: function (param) {
+                        //             return param.data[2]
+                        //         },
+                        //         // formatter: '{c}',
+                        //         position: 'top'
+                        //     },
+                        //     itemStyle: {
+                        //         // 图形样式
+                        //     }
+                        // },
                         data: this.manholeCoverData
                     },
                     {
@@ -239,11 +208,10 @@ export default {
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
                         symbol: 'circle', // 'circle','rect','pin'
-                        // symbol: 'image://http://news.baidu.com/resource/echarts-2.1.8/asset/ico/icon-red-circle.png',
+                        // symbol: 'image://http://news.baidu.com/icon-red-circle.png',
                         // symbol: 'image:// ../../../../assets/images/icon.png',
                         // symbol: require('./../../../../assets/logo.png'),
-
-                        // symbolSize: 10, // 标记大小
+                        symbolSize: 15, // 标记大小
                         itemStyle: {
                             color: '#FB161C'
                         },
@@ -252,11 +220,8 @@ export default {
                     {
                         name: '停车位',
                         type: 'scatter',
-                        coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
-                        // symbol: 'path://M1705.06,1318.313v-89.254l', // 标记的类型可以用矢量路径
-                        // 'rect','pin'
-                        symbolSize: 10, // 标记大小
-                        // symbolRotate: 35, // 标记的倾斜角度
+                        coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标
+                        symbolSize: 15, // 标记大小
                         itemStyle: {
                             color: '#FCCC38'
                         },

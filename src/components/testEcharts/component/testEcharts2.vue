@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div id="youChart" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
+  <div id="myChart2" :style="{width: widthDiv ,height: heightDiv}" @click="aaa"></div>
 </div>
 </template>
 
@@ -9,126 +9,131 @@ export default {
     data () {
         return {
             widthDiv: '100%',
-            heightDiv: 'auto'
+            heightDiv: 'auto',
+            widthChange: '', // 画布x轴
+            heightChange: '', // 画布y轴
+            imgName: '测试添加坐标点',
+            xMax: 45, // x轴最大坐标
+            xMin: -244, // x轴最小坐标
+            yMax: 130, // y轴最大坐标
+            yMin: -19, // y轴最小坐标
+            ratio: 0, // 高宽比.5159
+            data: [[15, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
         }
     },
-    props: ['heightDiv'],
-    computed: {},
+    computed: {
+    },
     mounted () {
-        console.log('heightDiv', this.heightDiv)
+        this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
+        this.widthChange = document.getElementById('myChart2').offsetWidth
+        this.heightChange = document.getElementById('myChart2').offsetWidth * this.ratio
+        this.heightDiv = this.heightChange + 'px'
         this.drawLine()
         const that = this
         window.addEventListener('resize', function () {
-            // 浏览器大小改变时canvas重绘
-            that.youChart.resize()
+            // 多个图表时响应
+            that.widthChange = document.getElementById('myChart2').offsetWidth
+            that.heightChange = that.widthChange * that.ratio
+            that.heightDiv = that.heightChange + 'px'
+            // 浏览器大小改变时canvas重绘  that.myChart2.resize()
+            that.drawLine()
         })
     },
     created () {},
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
-            this.youChart = this.$echarts.init(document.getElementById('youChart'))
+            this.myChart2 = this.$echarts.init(document.getElementById('myChart2'))
             // 绘制图表
-            this.youChart.setOption({
-                backgroundColor: 'rgba(128, 128, 128, 0)',
-                toolbox: {
-                    feature: {
-                        saveAsImage: {}
-                    }
-                },
+            this.myChart2.setOption({
+                // 标题组件
                 title: {
-                    text: '每月成交企业数',
+                    text: this.imgName,
                     textStyle: {
-                        color: '#ffffff'
-                    }
+                        color: '#fff'
+                    },
+                    left: 'right'
                 },
-                tooltip: {
-                    trigger: 'axis',
-                    // formatter: "{b} : {c}家"
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: '#283b56'
-                        }
-                    }
+                // 图例组件
+                legend: {
+                    right: 0,
+                    bottom: 'center',
+                    orient: 'vertical',
+                    textStyle: { color: 'red' }, // 设置文本
+                    data: ['井盖', '垃圾桶', '停车位']
+                },
+                // 直角坐标系网格
+                grid: {
+                    left: 0, // 直角坐标系网格离容器左侧的距离
+                    bottom: 0,
+                    width: '100%', // 直角坐标系网格的宽度
+                    height: '100%'
                 },
                 xAxis: {
-                    type: 'category',
-                    data: [
-                        '1月',
-                        '2月',
-                        '3月',
-                        '4月',
-                        '5月',
-                        '6月',
-                        '7月',
-                        '8月',
-                        '9月',
-                        '10月',
-                        '11月',
-                        '12月'
-                    ],
-                    axisLabel: {
-                        textStyle: {
-                            // color: '#fff'
-                        }
-                    },
-                    axisTick: {
-                        // show: false
-                    },
-                    axisLine: {
-                        // show: false
-                    },
-                    z: 10
-                },
-                yAxis: {
-                    axisLine: {
-                        // show: false
-                    },
-                    axisTick: {
-                        // show: false
-                    },
-                    axisLabel: {
-                        textStyle: {
-                            // color: '#fff'
-                        }
+                    show: true, // 是否显示 x 轴
+                    min: this.xMin, // x 轴最小坐标
+                    max: this.xMax, // x 轴最大坐标
+                    axisPointer: {
+                        show: 'cross'
+                        // snap: true // 自动吸附 x 轴
                     }
                 },
-                dataZoom: [
+                yAxis: {
+                    show: true, // 是否显示 y 轴
+                    min: this.yMin, // y 轴最小坐标
+                    max: this.yMax, // y 轴最大坐标
+                    axisPointer: {
+                        show: 'cross'
+                        // snap: true // 自动吸附 y 轴
+                    }
+                },
+                // 原生图形元素组件
+                graphic: [
                     {
-                        type: 'inside'
+                        type: 'image', // （背景图片）
+                        z: -10,
+                        style: {
+                            // image: this.imgUrl,
+                            image: require('../../../assets/images/timg.jpg'),
+                            width: this.widthChange,
+                            height: this.heightChange
+                        }
                     }
                 ],
                 series: [
                     {
-                        type: 'bar',
-                        itemStyle: {
-                            // normal: {
-                            //   // eslint-disable-next-line
-                            //   color: new echarts.graphic.LinearGradient(
-                            //     0, 0, 0, 1,
-                            //     [
-                            //       {offset: 0, color: '#C2EAFB'},
-                            //       {offset: 1, color: '#1193EE'}
-                            //     ]
-                            //   )
-                            // },
-                            // emphasis: {
-                            //   // eslint-disable-next-line
-                            //   color: new echarts.graphic.LinearGradient(
-                            //     0, 0, 0, 1,
-                            //     [
-                            //       {offset: 0, color: '#1193EE'},
-                            //       {offset: 1, color: '#C2EAFB'}
-                            //     ]
-                            //   )
-                            // }
-                        },
-                        barCategoryGap: '50%',
-                        data: [220, 182, 191, 290, 330, 310, 210, 122, 133, 334, 198, 220]
+                        id: 'a',
+                        type: 'line',
+                        smooth: true,
+                        symbolSize: 20,
+                        data: this.data
                     }
                 ]
             })
+
+            this.myChart2.resize({
+                height: this.heightDiv
+            })
+        },
+        aaa (params) {
+            var pointInPixel = [params.offsetX, params.offsetY]
+            var pointInGrid = this.myChart2.convertFromPixel('grid', pointInPixel)
+            console.log('pointInPixel', pointInPixel)
+            console.log('pointInGrid', pointInGrid)
+            if (this.myChart2.containPixel('grid', pointInPixel)) {
+                this.data.push(pointInGrid)
+
+                this.myChart2.setOption({
+                    series: [{
+                        id: 'a',
+                        data: this.data
+                    }]
+                })
+            }
+        },
+        aa () {
+        },
+        bb () {
         }
     }
 }
