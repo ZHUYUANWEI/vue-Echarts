@@ -13,24 +13,24 @@ export default {
             xData: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
             biaoyangData: [105, 79, 87, 96, 85, 79, 100, 88, 120, 85, 130, 79],
             pipingData: [50, 35, 82, 75, 65, 48, 40, 60, 59, 35, 48, 25]
-        }
+        };
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine()
-        const that = this
+        this.drawLine();
+        const that = this;
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.ShequEcharts3.resize()
-        })
+            that.ShequEcharts3.resize();
+        });
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.ShequEcharts3 = this.$echarts.init(
                 document.getElementById('ShequEcharts3')
-            )
+            );
             // 绘制图表
             this.ShequEcharts3.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -119,10 +119,10 @@ export default {
                         data: this.pipingData
                     }
                 ]
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style>

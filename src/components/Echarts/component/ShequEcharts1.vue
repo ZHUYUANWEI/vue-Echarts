@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts';
 export default {
     data () {
         return {
@@ -15,24 +15,24 @@ export default {
             yingjiaoData: [13640, 18532, 20123, 19734, 17549, 14574, 12145, 13976, 15671, 16483],
             shijiaoData: [12139, 17976, 17708, 19141, 16145, 13262, 12145, 12997, 14730, 15988],
             jiaofeilvData: [89, 97, 88, 97, 92, 91, 86, 93, 94, 97]
-        }
+        };
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine()
-        const that = this
+        this.drawLine();
+        const that = this;
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.ShequEcharts1.resize()
-        })
+            that.ShequEcharts1.resize();
+        });
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.ShequEcharts1 = this.$echarts.init(
                 document.getElementById('ShequEcharts1')
-            )
+            );
             // 绘制图表
             this.ShequEcharts1.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -120,15 +120,17 @@ export default {
                         type: 'bar',
                         barCategoryGap: '25%',
                         itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
-                                [{
-                                    offset: 0,
-                                    color: '#3163FF'
-                                }, {
-                                    offset: 1,
-                                    color: '#74C5FF'
-                                }]
-                            )
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
+                                    [{
+                                        offset: 0,
+                                        color: '#3163FF'
+                                    }, {
+                                        offset: 1,
+                                        color: '#74C5FF'
+                                    }]
+                                )
+                            }
                         },
                         data: this.yingjiaoData
                     },
@@ -137,15 +139,17 @@ export default {
                         type: 'bar',
                         barCategoryGap: '25%',
                         itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
-                                [{
-                                    offset: 0,
-                                    color: '#00AF6C'
-                                }, {
-                                    offset: 1,
-                                    color: '#90ED65'
-                                }]
-                            )
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
+                                    [{
+                                        offset: 0,
+                                        color: '#00AF6C'
+                                    }, {
+                                        offset: 1,
+                                        color: '#90ED65'
+                                    }]
+                                )
+                            }
                         },
                         data: this.shijiaoData
                     },
@@ -155,23 +159,25 @@ export default {
                         yAxisIndex: 1,
                         barCategoryGap: '25%',
                         itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
-                                [{
-                                    offset: 0,
-                                    color: '#FF9A2D'
-                                }, {
-                                    offset: 1,
-                                    color: '#F5DC0A'
-                                }]
-                            )
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
+                                    [{
+                                        offset: 0,
+                                        color: '#FF9A2D'
+                                    }, {
+                                        offset: 1,
+                                        color: '#F5DC0A'
+                                    }]
+                                )
+                            }
                         },
                         data: this.jiaofeilvData
                     }
                 ]
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style>

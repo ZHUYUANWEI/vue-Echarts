@@ -15,24 +15,24 @@ export default {
             gongquData: [50, 35, 42, 75, 65, 48, 40, 60, 59, 35, 48, 25],
             baoanData: [10, 20, 18, 10, 20, 25, 40, 75, 20, 25, 35, 25],
             baojieData: [175, 137, 175, 162, 155, 169, 152, 138, 170, 156, 178, 165]
-        }
+        };
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine()
-        const that = this
+        this.drawLine();
+        const that = this;
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.ShequEcharts2.resize()
-        })
+            that.ShequEcharts2.resize();
+        });
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.ShequEcharts2 = this.$echarts.init(
                 document.getElementById('ShequEcharts2')
-            )
+            );
             // 绘制图表
             this.ShequEcharts2.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -141,10 +141,10 @@ export default {
                         data: this.baojieData
                     }
                 ]
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style>

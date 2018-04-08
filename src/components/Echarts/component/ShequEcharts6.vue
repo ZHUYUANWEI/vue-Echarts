@@ -15,31 +15,47 @@ export default {
                 {
                     name: '工单分布一',
                     value: 335,
-                    itemStyle: {color: '#F6B42A'}
+                    itemStyle: {
+                        normal: {
+                            color: '#F6B42A'
+                        }
+                    }
                 },
                 {
                     name: '工单分布二',
                     value: 310,
-                    itemStyle: {color: '#E15C27'}
+                    itemStyle: {
+                        normal: {
+                            color: '#E15C27'
+                        }
+                    }
                 },
                 {
                     name: '工单分布三',
                     value: 274,
-                    itemStyle: {color: '#DD2B26'}
+                    itemStyle: {
+                        normal: {
+                            color: '#DD2B26'
+                        }
+                    }
                 },
                 {
                     name: '工单分布四',
                     value: 235,
-                    itemStyle: {color: '#89311D'}
+                    itemStyle: {
+                        normal: {
+                            color: '#89311D'
+                        }
+                    }
                 }
             ]
-        }
+        };
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine()
-        const that = this
+        this.drawLine();
+        const that = this;
         window.addEventListener('resize', function () {
             // 盒子小于400时隐藏引导线与标签文字
             if (document.getElementById('ShequEcharts6').offsetWidth < 400) {
@@ -60,7 +76,7 @@ export default {
                             }
                         }
                     ]
-                })
+                });
             } else {
                 that.ShequEcharts6.setOption({
                     series: [
@@ -79,17 +95,17 @@ export default {
                             }
                         }
                     ]
-                })
+                });
             }
             // 浏览器大小改变时canvas重绘
-            that.ShequEcharts6.resize()
-        })
+            that.ShequEcharts6.resize();
+        });
     },
     created () {},
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
-            this.ShequEcharts6 = this.$echarts.init(document.getElementById('ShequEcharts6'))
+            this.ShequEcharts6 = this.$echarts.init(document.getElementById('ShequEcharts6'));
             // 绘制图表
             this.ShequEcharts6.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -122,7 +138,7 @@ export default {
                         center: ['50%', '45%'],
                         radius: '62%',
                         clockwise: false,
-                        data: this.seriesData.sort(function (a, b) { return a.value - b.value }),
+                        data: this.seriesData.sort(function (a, b) { return a.value - b.value; }),
                         roseType: 'radius',
                         itemStyle: {
                             normal: {
@@ -133,7 +149,7 @@ export default {
                         }
                     }
                 ]
-            })
+            });
             if (document.getElementById('ShequEcharts6').offsetWidth < 400) {
                 this.ShequEcharts6.setOption({
                     series: [
@@ -152,11 +168,11 @@ export default {
                             }
                         }
                     ]
-                })
+                });
             }
         }
     }
-}
+};
 </script>
 
 <style>

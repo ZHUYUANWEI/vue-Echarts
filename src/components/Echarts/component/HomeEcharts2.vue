@@ -6,31 +6,31 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts';
 export default {
     data () {
         return {
             widthDiv: '100%',
             xData: ['0：00', '1：00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'],
             seriesData: [0, 10, 20, 18, 10, 20, 25, 40, 60, 70, 85, 98, 125, 170, 110, 60, 90, 65, 105, 160, 75, 35, 25, 10, 0]
-        }
+        };
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine()
-        const that = this
+        this.drawLine();
+        const that = this;
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.HomeEcharts2.resize()
-        })
+            that.HomeEcharts2.resize();
+        });
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.HomeEcharts2 = this.$echarts.init(
                 document.getElementById('HomeEcharts2')
-            )
+            );
             // 绘制图表
             this.HomeEcharts2.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -112,10 +112,10 @@ export default {
                     },
                     data: this.seriesData
                 }]
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style>
