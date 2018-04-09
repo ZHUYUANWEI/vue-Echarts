@@ -67,13 +67,13 @@ export default {
                     }
                 }
             ]
-        };
+        }
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine();
-        const that = this;
+        this.drawLine()
+        const that = this
         window.addEventListener('resize', function () {
             // 盒子小于400时隐藏引导线与标签文字
             if (document.getElementById('ShequEcharts7').offsetWidth < 400) {
@@ -94,7 +94,7 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             } else {
                 that.ShequEcharts7.setOption({
                     series: [
@@ -113,17 +113,17 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             }
             // 浏览器大小改变时canvas重绘
-            that.ShequEcharts7.resize();
-        });
+            that.ShequEcharts7.resize()
+        })
     },
     created () {},
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
-            this.ShequEcharts7 = this.$echarts.init(document.getElementById('ShequEcharts7'));
+            this.ShequEcharts7 = this.$echarts.init(document.getElementById('ShequEcharts7'))
             // 绘制图表
             this.ShequEcharts7.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -156,7 +156,7 @@ export default {
                         center: ['50%', '45%'],
                         radius: '62%',
                         clockwise: false,
-                        data: this.seriesData.sort(function (a, b) { return a.value - b.value; }),
+                        data: this.seriesData.sort(function (a, b) { return a.value - b.value }),
                         roseType: 'radius',
                         itemStyle: {
                             normal: {
@@ -167,7 +167,7 @@ export default {
                         }
                     }
                 ]
-            });
+            })
             if (document.getElementById('ShequEcharts7').offsetWidth < 400) {
                 this.ShequEcharts7.setOption({
                     series: [
@@ -186,11 +186,11 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             }
         }
     }
-};
+}
 </script>
 
 <style>

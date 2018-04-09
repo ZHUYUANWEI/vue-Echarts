@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import echarts from 'echarts';
+import echarts from 'echarts'
 export default {
     data () {
         return {
@@ -267,31 +267,31 @@ export default {
             ],
             xData: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
             seriesData: []
-        };
+        }
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        var date = new Date();
-        var year = date.getFullYear();
+        var date = new Date()
+        var year = date.getFullYear()
         this.contractsData.forEach((item, index, input) => {
             if (item.year === year) {
-                this.seriesData.push(item.count);
+                this.seriesData.push(item.count)
             }
-        });
-        this.drawLine();
-        const that = this;
+        })
+        this.drawLine()
+        const that = this
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.KanbanEcharts3.resize();
-        });
+            that.KanbanEcharts3.resize()
+        })
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.KanbanEcharts3 = this.$echarts.init(
                 document.getElementById('KanbanEcharts3')
-            );
+            )
             // 绘制图表
             this.KanbanEcharts3.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -372,10 +372,10 @@ export default {
                         data: this.seriesData
                     }
                 ]
-            });
+            })
         }
     }
-};
+}
 </script>
 
 <style>

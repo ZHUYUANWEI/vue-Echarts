@@ -15,24 +15,24 @@ export default {
             shouruData: [220, 182, 191, 234, 290, 330, 310, 132, 101, 134, 90, 230],
             kongzhiData: [150, 232, 201, 154, 190, 330, 410, 182, 191, 234, 290, 330],
             yusuanData: [430, 470, 420, 480, 530, 720, 750, 666, 450, 398, 450, 800]
-        };
+        }
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
-        this.drawLine();
-        const that = this;
+        this.drawLine()
+        const that = this
         window.addEventListener('resize', function () {
             // 浏览器大小改变时canvas重绘
-            that.KanbanEcharts4.resize();
-        });
+            that.KanbanEcharts4.resize()
+        })
     },
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
             this.KanbanEcharts4 = this.$echarts.init(
                 document.getElementById('KanbanEcharts4')
-            );
+            )
             // 绘制图表
             this.KanbanEcharts4.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -148,10 +148,10 @@ export default {
                         data: this.yusuanData
                     }
                 ]
-            });
+            })
         }
     }
-};
+}
 </script>
 
 <style>

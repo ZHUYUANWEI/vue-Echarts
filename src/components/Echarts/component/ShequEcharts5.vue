@@ -31,13 +31,13 @@
                         }
                     }
                 ]
-            };
+            }
         },
         props: ['heightDiv'],
         computed: {},
         mounted () {
-            this.drawLine();
-            const that = this;
+            this.drawLine()
+            const that = this
             window.addEventListener('resize', function () {
                 // 盒子小于400时隐藏引导线与标签文字
                 if (document.getElementById('ShequEcharts5').offsetWidth < 400) {
@@ -58,7 +58,7 @@
                                 }
                             }
                         ]
-                    });
+                    })
                 } else {
                     that.ShequEcharts5.setOption({
                         series: [
@@ -77,18 +77,18 @@
                                 }
                             }
                         ]
-                    });
+                    })
                 }
                 // 浏览器大小改变时canvas重绘
-                that.ShequEcharts5.resize();
-            });
+                that.ShequEcharts5.resize()
+            })
         },
         created () {
         },
         methods: {
             drawLine () {
                 // 基于准备好的dom，初始化echarts实例
-                this.ShequEcharts5 = this.$echarts.init(document.getElementById('ShequEcharts5'));
+                this.ShequEcharts5 = this.$echarts.init(document.getElementById('ShequEcharts5'))
                 // 绘制图表
                 this.ShequEcharts5.setOption({
                     backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -122,7 +122,7 @@
                             radius: '62%',
                             clockwise: false,
                             data: this.seriesData.sort(function (a, b) {
-                                return a.value - b.value;
+                                return a.value - b.value
                             }),
                             roseType: 'radius',
                             itemStyle: {
@@ -134,7 +134,7 @@
                             }
                         }
                     ]
-                });
+                })
                 if (document.getElementById('ShequEcharts5').offsetWidth < 400) {
                     this.ShequEcharts5.setOption({
                         series: [
@@ -153,11 +153,11 @@
                                 }
                             }
                         ]
-                    });
+                    })
                 }
             }
         }
-    };
+    }
 </script>
 
 <style>

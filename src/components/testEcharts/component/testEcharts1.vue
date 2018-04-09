@@ -104,11 +104,11 @@ export default {
                         this.trashData[index].value = []
                         this.trashData[index].value = [item.xaxis, item.yaxis]
                         if (item.unused < 0.33) {
-                            this.trashData[index].symbol = imgUrl.symbol.trash0
+                            this.trashData[index].symbol = imgUrl.symbol.trash2
                         } else if (item.unused < 0.66) {
                             this.trashData[index].symbol = imgUrl.symbol.trash1
                         } else if (item.unused <= 1) {
-                            this.trashData[index].symbol = imgUrl.symbol.trash2
+                            this.trashData[index].symbol = imgUrl.symbol.trash0
                         }
                     })
                     this.drawLine()

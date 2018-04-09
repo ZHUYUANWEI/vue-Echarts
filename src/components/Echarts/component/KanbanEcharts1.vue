@@ -75,18 +75,18 @@ export default {
                     }
                 }
             ]
-        };
+        }
     },
     props: ['heightDiv'],
     computed: {},
     mounted () {
         this.statusCountList.forEach((item, index, input) => {
-            this.legendData.push(item.statusDescription);
-            this.seriesData[index].name = item.statusDescription;
-            this.seriesData[index].value = item.count;
-        });
-        this.drawLine();
-        const that = this;
+            this.legendData.push(item.statusDescription)
+            this.seriesData[index].name = item.statusDescription
+            this.seriesData[index].value = item.count
+        })
+        this.drawLine()
+        const that = this
         window.addEventListener('resize', function () {
             // 盒子小于400时隐藏引导线与标签文字
             if (document.getElementById('KanbanEcharts1').offsetWidth < 400) {
@@ -108,7 +108,7 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             } else {
                 that.KanbanEcharts1.setOption({
                     series: [
@@ -128,17 +128,17 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             }
             // 浏览器大小改变时canvas重绘
-            that.KanbanEcharts1.resize();
-        });
+            that.KanbanEcharts1.resize()
+        })
     },
     created () {},
     methods: {
         drawLine () {
             // 基于准备好的dom，初始化echarts实例
-            this.KanbanEcharts1 = this.$echarts.init(document.getElementById('KanbanEcharts1'));
+            this.KanbanEcharts1 = this.$echarts.init(document.getElementById('KanbanEcharts1'))
             // 绘制图表
             this.KanbanEcharts1.setOption({
                 backgroundColor: 'rgba(128, 128, 128, 0)',
@@ -181,7 +181,7 @@ export default {
                         }
                     }
                 ]
-            });
+            })
             if (document.getElementById('KanbanEcharts1').offsetWidth < 400) {
                 this.KanbanEcharts1.setOption({
                     series: [
@@ -201,11 +201,11 @@ export default {
                             }
                         }
                     ]
-                });
+                })
             }
         }
     }
-};
+}
 </script>
 
 <style>
