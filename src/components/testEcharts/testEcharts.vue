@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="TestEcharts1"><TestEcharts1></TestEcharts1></div>
-    <!-- <div class="TestEcharts2"><TestEcharts2 :heightDiv="heightDiv1"></TestEcharts2></div> -->
-    <!-- <div class="TestEcharts3"><TestEcharts3 :heightDiv="heightDiv2"></TestEcharts3></div> -->
+    <div class="TestEcharts2"><TestEcharts2 :heightDiv="heightDiv1"></TestEcharts2></div>
+    <div class="TestEcharts3"><TestEcharts3 :heightDiv="heightDiv2"></TestEcharts3></div>
     <!-- <button @click="clickButton">点击</button> -->
   </div>
 </template>

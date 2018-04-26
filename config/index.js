@@ -11,8 +11,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
+            // '/lora': {
+            //     // target: 'http://192.168.1.66:8080/LoraWeb', // 设置你调用的接口域名和端口号 别忘了加http
+            //     target: 'http://lora.omc.elinkit.com.cn',
+            //     changeOrigin: true
+            // },
             '/lora': {
-                target: 'http://192.168.1.66:8080/LoraWeb', // 设置你调用的接口域名和端口号 别忘了加http
+                target: 'http://192.168.1.66:8080/LoraWeb',
                 changeOrigin: true
             }
         },

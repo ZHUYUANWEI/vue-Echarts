@@ -5,69 +5,51 @@
 </template>
 
 <script>
-import apiUrl from './../../../common/apiConfig.js'
-import imgUrl from './../../../common/imgConfig.js'
+import config from './../common/config/config.js'
 export default {
     data () {
         return {
-            sendData: {
-                imgId: '8f7e2c4981da44d6be16827741836a2b',
-                codes: ['00', '04', '09']
-            },
             widthDiv: '100%',
             heightDiv: 'auto',
             widthChange: '', // 画布x轴
             heightChange: '', // 画布y轴
-            imgName: '招商客户分析',
+            sendData: {
+                imgId: '8f7e2c4981da44d6be16827741836a2b',
+                codes: ['00', '04', '09']
+            },
+            imgName: '',
             imgUrl: '',
-            xMax: 45, // x轴最大坐标
-            xMin: -244, // x轴最小坐标
-            yMax: 130, // y轴最大坐标
-            yMin: -19, // y轴最小坐标
-            ratio: 0, // 高宽比.5159
-            manholeCoverData: [ // 井盖
-                // [-117.4, 42.4],
-                // [-107.9, 21],
-                // [-110.7, 0.95],
-                // [-121.46, 11.8],
-                // [-133.4, 25.9]
+            xMax: 0, // x轴最大坐标
+            xMin: 0, // x轴最小坐标
+            yMax: 0, // y轴最大坐标
+            yMin: 0, // y轴最小坐标
+            ratio: 0, // 高宽比
+            legendRatio: 1, // 图例比
+            manholeCoverData: [
+                // 井盖
             ],
-            trashData: [ // 垃圾桶
-                // [-111.2, 13.2],
-                // [-115.2, -1.8],
-                // [-124.9, 18.6],
-                // [-137, 30],
-                // [-132.6, 33.2]
+            trashData: [
+                // 垃圾桶
             ],
-            parkData: [ // 停车位
-                // [-100.3, 53]
+            parkData: [
+                // 停车位
             ]
-            // sendData: {
-            //     token: '3ad3b924fa69a58172310c3bb1129d7e',
-            //     start_time: '2018-04-10',
-            //     end_time: '2018-04-11',
-            //     granularity: 'hourly'
-            // }
         }
     },
     computed: {
     },
     mounted () {
         this.getNumber()
-        // setInterval(this.getNumber, 10000)
-        // a = setInterval(this.getNumber, 2000)
-        this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
-        this.widthChange = document.getElementById('myChart').offsetWidth
-        this.heightChange = document.getElementById('myChart').offsetWidth * this.ratio
-        this.heightDiv = this.heightChange + 'px'
-        // this.drawLine()
+        setInterval(this.getNumber, 10000)
+        // a = setInterval(this.getNumber, 1500)
+
         const that = this
+        // 多个图表时响应
         window.addEventListener('resize', function () {
-            // 多个图表时响应
             that.widthChange = document.getElementById('myChart').offsetWidth
             that.heightChange = that.widthChange * that.ratio
             that.heightDiv = that.heightChange + 'px'
-            // 浏览器大小改变时canvas重绘  that.myChart.resize()
+
             that.drawLine()
         })
     },
@@ -75,48 +57,56 @@ export default {
     methods: {
         getNumber () {
             var sendData = JSON.stringify(this.sendData)
-            this.$axios.post(apiUrl.loraShow, sendData, apiUrl.json)
+            this.$axios.post(config.apiConfig.loraShow, sendData, config.apiConfig.json)
                 .then(res => {
-                    console.log('成功', res.data)
+                    console.log('成功', res)
+                    this.imgName = res.data.data.imgName
                     this.imgUrl = res.data.data.imgUrl
                     this.xMax = res.data.data.imgXaxisMax
                     this.xMin = res.data.data.imgXaxisMin
                     this.yMax = res.data.data.imgYaxisMax
                     this.yMin = res.data.data.imgYaxisMin
-                    // 停车场
-                    // const that = this
+                    // 井盖
                     res.data.data['00'].forEach((item, index, input) => {
                         this.manholeCoverData[index] = {}
                         this.manholeCoverData[index].value = []
                         this.manholeCoverData[index].value = [item.xaxis, item.yaxis]
                         if (item.alarmStatus === 1) {
-                            this.manholeCoverData[index].symbol = imgUrl.symbol.manholeCover0
+                            this.manholeCoverData[index].symbol = config.imgConfig.symbol.manholeCover0
                         } else if (item.alarmStatus === 0) {
-                            this.manholeCoverData[index].symbol = imgUrl.symbol.manholeCover1
+                            this.manholeCoverData[index].symbol = config.imgConfig.symbol.manholeCover1
                         }
                     })
-                    res.data.data['09'].forEach((item, index, input) => {
-                        this.parkData[index] = {}
-                        this.parkData[index].value = []
-                        this.parkData[index].value = [item.xaxis, item.yaxis]
-                        if (item.parkingLotStatus === '55') {
-                            this.parkData[index].symbol = imgUrl.symbol.park0
-                        } else if (item.parkingLotStatus === 'aa') {
-                            this.parkData[index].symbol = imgUrl.symbol.park1
-                        }
-                    })
+                    // 垃圾桶
                     res.data.data['04'].forEach((item, index, input) => {
                         this.trashData[index] = {}
                         this.trashData[index].value = []
                         this.trashData[index].value = [item.xaxis, item.yaxis]
                         if (item.unused < 0.33) {
-                            this.trashData[index].symbol = imgUrl.symbol.trash2
+                            this.trashData[index].symbol = config.imgConfig.symbol.trash2
                         } else if (item.unused < 0.66) {
-                            this.trashData[index].symbol = imgUrl.symbol.trash1
+                            this.trashData[index].symbol = config.imgConfig.symbol.trash1
                         } else if (item.unused <= 1) {
-                            this.trashData[index].symbol = imgUrl.symbol.trash0
+                            this.trashData[index].symbol = config.imgConfig.symbol.trash0
                         }
                     })
+                    // 停车场
+                    res.data.data['09'].forEach((item, index, input) => {
+                        this.parkData[index] = {}
+                        this.parkData[index].value = []
+                        this.parkData[index].value = [item.xaxis, item.yaxis]
+                        if (item.parkingLotStatus === '55') {
+                            this.parkData[index].symbol = config.imgConfig.symbol.park0
+                        } else if (item.parkingLotStatus === 'aa') {
+                            this.parkData[index].symbol = config.imgConfig.symbol.park1
+                        }
+                    })
+
+                    this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
+                    this.widthChange = document.getElementById('myChart').offsetWidth
+                    this.heightChange = document.getElementById('myChart').offsetWidth * this.ratio
+                    this.heightDiv = this.heightChange + 'px'
+
                     this.drawLine()
                 //   if (res.data.status_code !== '101') {
                 //     clearInterval(a)
@@ -128,12 +118,14 @@ export default {
                 })
         },
         drawLine () {
+            this.legendRatio = this.widthChange / 1000
             // 基于准备好的dom，初始化echarts实例
             this.myChart = this.$echarts.init(document.getElementById('myChart'))
             // 绘制图表
             this.myChart.setOption({
                 // 标题组件
                 title: {
+                    show: false,
                     text: this.imgName
                 },
                 // 图例组件
@@ -141,6 +133,8 @@ export default {
                     right: 0,
                     bottom: 'center',
                     orient: 'vertical',
+                    itemWidth: 15 * this.legendRatio,
+                    itemHeight: 15 * this.legendRatio,
                     textStyle: { color: 'red' }, // 设置文本
                     data: ['井盖', '垃圾桶', '停车位']
                 },
@@ -152,45 +146,40 @@ export default {
                     height: '100%'
                 },
                 xAxis: {
-                    show: true, // 是否显示 x 轴
+                    show: false, // 是否显示 x 轴
                     min: this.xMin, // x 轴最小坐标
                     max: this.xMax, // x 轴最大坐标
                     axisPointer: {
-                        show: 'cross'
+                        show: false
                         // snap: true // 自动吸附 x 轴
                     }
                 },
                 yAxis: {
-                    show: true, // 是否显示 y 轴
+                    show: false, // 是否显示 y 轴
                     min: this.yMin, // y 轴最小坐标
                     max: this.yMax, // y 轴最大坐标
                     axisPointer: {
-                        show: 'cross'
+                        show: false
                         // snap: true // 自动吸附 y 轴
                     }
                 },
                 // 原生图形元素组件
-                graphic: [
-                    {
-                        type: 'image', // （背景图片）
-                        z: -10,
-                        style: {
-                            image: this.imgUrl,
-                            // image: require('../../../assets/images/timg.jpg'),
-                            width: this.widthChange,
-                            height: this.heightChange
-                        }
+                graphic: [{
+                    type: 'image', // （背景图片）
+                    z: -10,
+                    style: {
+                        image: this.imgUrl,
+                        width: this.widthChange,
+                        height: this.heightChange
                     }
-                ],
+                }],
                 series: [
                     {
                         name: '井盖',
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
-                        symbolSize: 15, // 标记大小
-                        itemStyle: { // 图形样式
-                            color: '#B6E620'
-                        },
+                        symbolSize: 15 * this.legendRatio, // 标记大小
+                        symbol: config.imgConfig.symbol.manholeCover0,
                         // emphasis: {
                         //     // 高亮的图形和标签样式。
                         //     label: {
@@ -213,24 +202,16 @@ export default {
                         name: '垃圾桶',
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标系
-                        symbol: 'circle', // 'circle','rect','pin'
-                        // symbol: 'image://http://news.baidu.com/icon-red-circle.png',
-                        // symbol: 'image:// ../../../../assets/images/icon.png',
-                        // symbol: require('./../../../../assets/logo.png'),
-                        symbolSize: 15, // 标记大小
-                        itemStyle: {
-                            color: '#FB161C'
-                        },
+                        symbol: config.imgConfig.symbol.trash2,
+                        symbolSize: 15 * this.legendRatio, // 标记大小
                         data: this.trashData
                     },
                     {
                         name: '停车位',
                         type: 'scatter',
                         coordinateSystem: 'cartesian2d', // 默认使用二维的直角坐标
-                        symbolSize: 15, // 标记大小
-                        itemStyle: {
-                            color: '#FCCC38'
-                        },
+                        symbol: config.imgConfig.symbol.park0,
+                        symbolSize: 15 * this.legendRatio, // 标记大小
                         data: this.parkData
                     }
                 ]
@@ -239,42 +220,9 @@ export default {
             this.myChart.resize({
                 height: this.heightDiv
             })
-        },
-        aa () {
-            // 实时改变，动态传输，（直接将要改变的值重新赋值，不需要改变的会使用原来的值，不需要再写一遍）
-            // this.myChart.setOption({
-            //   // 背景图片
-            //   graphic: [{
-            //     style: {
-            //       width: 1938,
-            //       height: 1000
-            //     }
-            //   }]
-            // })
-        },
-        bb () {
-            // this.myChart.resize({
-            //   width: 20,
-            //   height: 200
-            // })
         }
     }
 }
-
-// var charts = [];
-// myChart = echarts.init(document.getElementById('main'));
-// myChart.setOption(option);
-// charts.push(myChart);
-
-// myChart = echarts.init(document.getElementById('main2'));
-// myChart.setOption(option);
-// charts.push(myChart);
-
-// window.onresize = function(){
-//   for(var i = 0; i < charts.length; i++){
-//       charts[i].resize();
-//   }
-// }
 </script>
 
 <style>

@@ -1,29 +1,4 @@
 module.exports = {
-	// "extends": "standard",
-	// "parser": "babel-eslint",
-	// "parserOptions": {
-	// 	"ecmaVersion": 6,
-	// 	"sourceType": "module",
-	// 	"ecmaFeatures": {
-	// 		"globalReturn": true,
-	// 		"impliedStrict": true,
-	// 		"jsx": true
-	// 	}
-	// },
-	// "env": {
-	// 	"amd": true,
-	// 	"es6": true,
-	// 	"browser": true,
-	// 	"node": true
-	// },
-	// "plugins": [
-	// 	'html'
-	// ],
-	// "rules": {
-	// 	"strict": 0,
-	// 	"semi": 2,
-	// 	  // "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }]
-    // }
     "extends": "standard",
     "root": true,
     "parserOptions": {
