@@ -1,5 +1,6 @@
 <template>
   <div>
+      <!-- 测试github与码云 -->
     <div class="TestEcharts1"><TestEcharts1></TestEcharts1></div>
     <div class="TestEcharts2"><TestEcharts2></TestEcharts2></div>
     <div class="TestEcharts3"><TestEcharts3 :heightDiv="heightDiv2"></TestEcharts3></div>
