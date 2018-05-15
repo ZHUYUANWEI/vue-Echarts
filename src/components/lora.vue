@@ -1,5 +1,6 @@
 <template>
 <div>
+    <h3>动态显示垃圾桶、井盖、车位状态</h3>
   <div id="myChart" :style="{width: widthDiv ,height: heightDiv}"></div>
 </div>
 </template>
@@ -91,16 +92,16 @@ export default {
                         }
                     })
                     // 停车场
-                    res.data.data['09'].forEach((item, index, input) => {
-                        this.parkData[index] = {}
-                        this.parkData[index].value = []
-                        this.parkData[index].value = [item.xaxis, item.yaxis]
-                        if (item.parkingLotStatus === '55') {
-                            this.parkData[index].symbol = config.imgConfig.symbol.park0
-                        } else if (item.parkingLotStatus === 'aa') {
-                            this.parkData[index].symbol = config.imgConfig.symbol.park1
-                        }
-                    })
+                    // res.data.data['09'].forEach((item, index, input) => {
+                    //     this.parkData[index] = {}
+                    //     this.parkData[index].value = []
+                    //     this.parkData[index].value = [item.xaxis, item.yaxis]
+                    //     if (item.parkingLotStatus === '55') {
+                    //         this.parkData[index].symbol = config.imgConfig.symbol.park0
+                    //     } else if (item.parkingLotStatus === 'aa') {
+                    //         this.parkData[index].symbol = config.imgConfig.symbol.park1
+                    //     }
+                    // })
 
                     this.ratio = Math.abs(this.yMin - this.yMax) / Math.abs(this.xMin - this.xMax)
                     this.widthChange = document.getElementById('myChart').offsetWidth

@@ -1,5 +1,6 @@
 <template>
 <div>
+    <h3>固定高度环形图</h3>
   <div id="youChart1" :style="{width: widthDiv ,height: heightDiv + 'px'}"></div>
 </div>
 </template>
@@ -8,8 +9,7 @@
 export default {
     data () {
         return {
-            widthDiv: '100%',
-            heightDiv: 'auto'
+            widthDiv: '100%'
         }
     },
     props: ['heightDiv'],

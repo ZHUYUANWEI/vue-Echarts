@@ -1,5 +1,6 @@
 <template>
 <div>
+    <h3>地图选点取值</h3>
   <div id="myChart2" :style="{width: widthDiv ,height: heightDiv}" @click="aaa"></div>
 </div>
 </template>
