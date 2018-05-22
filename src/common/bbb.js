@@ -11,5 +11,6 @@ const imgUrl = {
         trash1: 'image://' + require('./../assets/images/trash1.svg'),
         trash2: 'image://' + require('./../assets/images/trash2.svg')
     }
+
 }
 export default imgUrl

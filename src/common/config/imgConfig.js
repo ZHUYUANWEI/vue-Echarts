@@ -11,6 +11,21 @@ const imgConfig = {
         trash0: 'image://' + require('../images/trash0.svg'),
         trash1: 'image://' + require('../images/trash1.svg'),
         trash2: 'image://' + require('../images/trash2.svg')
-    }
+    },
+    // 东方时尚中心大屏展示dome--parkManageDeviceL
+    computerRoomBottomMap: require('../images/computerRoomBottomMap.jpg'), // 机房底图
+    airConditioningStateOn: require('../images/airConditioningStateOn.png'), // 空调状态-开
+    airConditioningStateOff: require('../images/airConditioningStateOff.png'), // 空调状态-关
+    settingTemperature: require('../images/temperature.png'), // 设定温度
+    settingHumidity: require('../images/humidity.png'), // 设定湿度
+    returnAirHumidity: require('../images/humidity.png'), // 回风湿度
+    actualTemperature: require('../images/temperature.png'), // 实际温度
+    actualHumidity: require('../images/humidity.png'), // 实际湿度
+    // 东方时尚中心大屏展示dome--parkManageDeviceC
+    visitorsFlowrate: require('../images/visitorsFlowrate.png'), // 人流量
+    // 东方时尚中心大屏展示dome--parkManageDeviceR
+    peakTime: require('../images/peakTime.png'), // 峰值时间
+    // 园区管理
+    peopleHeatMap: require('../images/3D.jpg') // 3D渲染图
 }
 export default imgConfig
