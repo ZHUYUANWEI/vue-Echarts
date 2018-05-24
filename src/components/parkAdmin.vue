@@ -3,23 +3,31 @@
     <div class="grad gradL"></div>
     <div id="heatmapContainerWrapper"  :style="{width: widthDiv ,height: heightDiv, backgroundImage: 'url(' + imgUrl + ')' }" ></div>
     <div class="grad gradR"></div>
+
+    <!-- 天气预报 -->
     <div class="weatherForecast" style="position: absolute;top: 0;left:0;z-index:10" >
         <div class="weather">
             <div class="nowWeather">
-                <div style="width:110px;height:110px;background: #fff;">
-                    <big class="png90" :class="weatherData.forecast[0].imageCss" :style="{backgroundImage: 'url(' + png90 + ')' }"></big>
+                <div style="width:110px;height:110px;background: #000;">
+                    <big class="png90" :class="weatherClass" :style="{backgroundImage: 'url(' + todayWeather + ')'}"></big>
                 </div>
                 <div>
-                    <p>{{weatherData.temperature}}</p>
-                    <p>{{weatherData.forecast[0].weather}}</p>
+                    <table style="height:110px">
+                        <tr>
+                            <th>{{weatherData.temperature}}</th>
+                        </tr>
+                        <tr>
+                            <th>{{weatherText}}</th>
+                        </tr>
+                </table>
                 </div>
             </div>
             <div class="weatherWarning">
                 <div>
-                    <div style="width：25%;background:#000">
+                    <div class="weatherWarningTL">
                         <img :src="weatherWarning" alt="" style="width:100%">
                     </div>
-                    <div>天气预警</div>
+                    <div class="weatherWarningTR">天气预警</div>
                 </div>
                 <table>
                     <tr>
@@ -42,7 +50,9 @@
                     <td v-for="item in weatherData.forecast" :key="item.date">{{item.date}}</td>
                 </tr>
                 <tr>
-                    <td v-for="item in weatherData.forecast" :key="item.date"><big class="png40" :class="item.imageCss"></big></td>
+                    <td v-for="item in weatherData.forecast" :key="item.date">
+                        <big class="png40" :class="item.imageCss" :style="{backgroundImage: 'url(' + futureWeather + ')'}"></big>
+                    </td>
                 </tr>
                 <tr>
                     <td v-for="item in weatherData.forecast" :key="item.date">{{item.weather}}</td>
@@ -86,6 +96,7 @@
 <script>
 import config from './../common/config/config.js'
 import Heatmap from 'heatmap.js'
+require('./../common/css/weather.css')
 export default {
     data () {
         return {
@@ -103,9 +114,12 @@ export default {
             heatmapData: [],
             num: 0,
 
-            weatherData: '',
             weatherWarning: config.imgConfig.weatherWarning,
-            png90: config.imgConfig.png90
+            todayWeather: config.imgConfig.todayWeather,
+            futureWeather: config.imgConfig.futureWeather,
+            weatherData: '',
+            weatherClass: '',
+            weatherText: ''
 
         }
     },
@@ -191,6 +205,8 @@ export default {
                 .then(res => {
                     console.log('成功——获取天气预报', res.data)
                     this.weatherData = res.data
+                    this.weatherClass = res.data.forecast[0].imageCss
+                    this.weatherText = res.data.forecast[0].weather
                 })
                 .catch(err => {
                     console.log('失败——获取天气预报', err)
@@ -239,8 +255,6 @@ export default {
 }
 
 .weather{
-    /* padding: 10px; */
-    /* text-align: center; */
     display: flex;
     justify-content:space-between;
 }
@@ -251,6 +265,7 @@ export default {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    border-right: 1px solid #000;
 }
 
 .weather .nowWeather > div{
@@ -262,15 +277,37 @@ export default {
     box-sizing: border-box;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.7);
+    border-left: 1px solid #000;
+    font-size: 0;
 }
 
-.weatherWarning th{
-    width:33.33%;
-    font-size: 14px;
+.weatherWarningTL{
+    background: rgb(0, 0, 0);
+    height: 55px;
+    width: 55px;
+    float: left;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
-.weatherWarning th{
+.weatherWarningTR{
+    height: 55px;
+    line-height: 55px;
+    float: left;
+    width: 163px;
+    font-size: 22px;
+}
+
+.weatherWarning table{
     font-size: 12px;
+    height: 55px;
+}
+
+.weatherWarning th,
+.weatherWarning td
+{
+    width:33.33%;
+    padding: 0;
 }
 
 .weather div{
@@ -280,6 +317,7 @@ export default {
 .futureWeather{
     padding: 10px;
     font-size: 12px;
+    border-top: 2px solid #000
 }
 
 .futureWeather td{
@@ -305,211 +343,4 @@ td{
     padding: 12px 0;
 }
 
-/* 中国天气 http://www.weather.com.cn/weather/101120206.shtml */
-big {
-    margin: 0 auto;
-    background-repeat: no-repeat;
-    background-position: -640px 240px;
-    display: block;
-}
-
-big.png40 {
-    background-image: url(http://i.tq121.com.cn/i/weather2015/png/blue30.png);
-    height: 30px;
-    width: 30px;
-}
-
-big.d00 {
-    background-position: 0 0
-}
-
-big.d1,
-big.d01 {
-    background-position: -80px 0
-}
-
-big.d2,
-big.d02 {
-    background-position: -160px 0
-}
-
-big.d3,
-big.d03 {
-    background-position: -240px 0
-}
-
-big.d4,
-big.d04 {
-    background-position: -320px 0
-}
-
-big.d5,
-big.d05 {
-    background-position: -400px 0
-}
-
-big.d6,
-big.d06 {
-    background-position: -480px 0
-}
-
-big.d7,
-big.d07 {
-    background-position: -560px 0
-}
-
-big.d8,
-big.d08 {
-    background-position: -640px 0
-}
-
-big.d9,
-big.d09 {
-    background-position: 0 -80px
-}
-
-big.d10 {
-    background-position: -80px -80px
-}
-
-big.d11 {
-    background-position: -160px -80px
-}
-
-big.d12 {
-    background-position: -240px -80px
-}
-
-big.d13 {
-    background-position: -320px -80px
-}
-
-big.d14 {
-    background-position: -400px -80px
-}
-
-big.d15 {
-    background-position: -480px -80px
-}
-
-big.d16 {
-    background-position: -560px -80px
-}
-
-big.d17 {
-    background-position: -640px -80px
-}
-
-big.d18 {
-    background-position: 0 -160px
-}
-
-big.d19 {
-    background-position: -80px -160px
-}
-
-big.d20 {
-    background-position: -160px -160px
-}
-
-big.d21 {
-    background-position: -240px -160px
-}
-
-big.d22 {
-    background-position: -320px -160px
-}
-
-big.d23 {
-    background-position: -400px -160px
-}
-
-big.d24 {
-    background-position: -480px -160px
-}
-
-big.d25 {
-    background-position: -560px -160px
-}
-
-big.d26 {
-    background-position: -640px -160px
-}
-
-big.d27 {
-    background-position: 0 -240px
-}
-
-big.d28 {
-    background-position: -80px -240px
-}
-
-big.d29 {
-    background-position: -160px -240px
-}
-
-big.d30 {
-    background-position: -240px -240px
-}
-
-big.d31 {
-    background-position: -320px -240px
-}
-
-big.d32 {
-    background-position: -400px -240px
-}
-
-big.d33 {
-    background-position: -480px -240px
-}
-
-big.d53 {
-    background-position: -560px -240px
-}
-
-big.d57 {
-    background-position: -720px 0
-}
-
-big.d32 {
-    background-position: -720px -80px
-}
-
-big.d49 {
-    background-position: -720px -160px
-}
-
-big.d58 {
-    background-position: -720px -240px
-}
-
-big.d54 {
-    background-position: -800px 0
-}
-
-big.d55 {
-    background-position: -800px -80px
-}
-
-big.d56 {
-    background-position: -800px -160px
-}
-
-big.d301 {
-    background-position: -880px 0
-}
-
-big.d302 {
-    background-position: -880px -80px
-}
-
-
-
-
-big.png90 {
-    height: 90px;
-    width: 90px;
-    background-size: 2880px;
-}
 </style>

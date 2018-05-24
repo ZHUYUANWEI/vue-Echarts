@@ -28,7 +28,8 @@ const imgConfig = {
     // 园区管理
     peopleHeatMap: require('../images/3D.jpg'), // 3D渲染图
     weatherWarning: require('../images/weatherWarning.png'), // 天气预警
-    png90: require('../images/white30.png'), // 天气预警
+    todayWeather: require('../images/white30.png'), // 今日天气图片
+    futureWeather: require('../images/blue30.png'), // 未来天气图片
     // 地图获取坐标点
     getPoint: require('../images/3D.jpg') // 3D渲染图
 }
