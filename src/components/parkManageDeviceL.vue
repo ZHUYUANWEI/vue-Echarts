@@ -75,24 +75,24 @@ export default {
         setInterval(this.getaxios, 900000) // 15min轮询
     },
     methods: {
-        getaxios () {
-            const that = this
-            // 清空数组
-            that.name.splice(0, that.name.length)
-            that.value.splice(0, that.value.length)
-            this.$axios.get('/yuanquguanli')
-                .then(function (response) {
-                    console.log('接收成功！', response)
-                    console.log('1', response.data.data)
-                    for (var i = 0; i < response.data.data.length; i++) {
-                        that.name.push(response.data.data[i].name) // 循环对象的name
-                        that.value.push(response.data.data[i].value) // 循环对象的value
-                    }
-                })
-                .catch(function (error) {
-                    console.log('错误', error)
-                })
-        }
+        // getaxios () {
+        //     const that = this
+        //     // 清空数组
+        //     that.name.splice(0, that.name.length)
+        //     that.value.splice(0, that.value.length)
+        //     this.$axios.get('/yuanquguanli')
+        //         .then(function (response) {
+        //             console.log('接收成功！', response)
+        //             console.log('1', response.data.data)
+        //             for (var i = 0; i < response.data.data.length; i++) {
+        //                 that.name.push(response.data.data[i].name) // 循环对象的name
+        //                 that.value.push(response.data.data[i].value) // 循环对象的value
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             console.log('错误', error)
+        //         })
+        // }
     }
 }
 </script>
@@ -111,7 +111,7 @@ body {
     height: 100%;
   background-repeat: no-repeat;
   background-position: center;
- 
+
   /* background:rgba(211, 160, 160, 0.3);     */
 }
 ul{

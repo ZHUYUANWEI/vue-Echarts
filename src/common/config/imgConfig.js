@@ -26,6 +26,10 @@ const imgConfig = {
     // 东方时尚中心大屏展示dome--parkManageDeviceR
     peakTime: require('../images/peakTime.png'), // 峰值时间
     // 园区管理
-    peopleHeatMap: require('../images/3D.jpg') // 3D渲染图
+    peopleHeatMap: require('../images/3D.jpg'), // 3D渲染图
+    weatherWarning: require('../images/weatherWarning.png'), // 天气预警
+    png90: require('../images/white30.png'), // 天气预警
+    // 地图获取坐标点
+    getPoint: require('../images/3D.jpg') // 3D渲染图
 }
 export default imgConfig

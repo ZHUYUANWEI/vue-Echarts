@@ -19,7 +19,12 @@ module.exports = {
             '/ruckus-api': {
                 target: 'http://data.mip.omc.elinkit.com.cn', // 云服务
                 changeOrigin: true
+            },
+            '/showData': {
+                target: 'http://192.168.1.240:8080', // 云服务
+                changeOrigin: true
             }
+            
         },
 
         // Various Dev Server settings

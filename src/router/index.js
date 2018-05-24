@@ -8,6 +8,7 @@ import parkAdmin from '@/components/parkAdmin'
 // import parkManageDeviceL from '@/components/parkManageDeviceL'
 // import parkManageDeviceC from '@/components/parkManageDeviceC'
 import parkManageDeviceR from '@/components/parkManageDeviceR'
+import getPoint from '@/components/getPoint'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
             path: '/parkManageDeviceR',
             name: 'parkManageDeviceR',
             component: parkManageDeviceR
+        },
+        {
+            path: '/getPoint',
+            name: 'getPoint',
+            component: getPoint
         }
     ]
 })
