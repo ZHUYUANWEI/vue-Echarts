@@ -16,15 +16,17 @@ module.exports = {
                 target: 'http://lora.omc.elinkit.com.cn',
                 changeOrigin: true
             },
-            '/ruckus-api': {
-                target: 'http://data.mip.omc.elinkit.com.cn', // 云服务
-                changeOrigin: true
-            },
+            // // 俊强-（临时）
+            // '/ruckus-api': {
+            //     target: 'http://data.mip.omc.elinkit.com.cn',
+            //     changeOrigin: true
+            // },
+            // 俊强-人流热力图/天气预报/人流
             '/showData': {
-                target: 'http://192.168.1.240:8080', // 云服务
+                target: 'http://192.168.1.66:8080',
                 changeOrigin: true
             }
-            
+
         },
 
         // Various Dev Server settings
@@ -65,7 +67,7 @@ module.exports = {
         // Paths
         assetsRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
+        assetsPublicPath: './',
 
         /**
      * Source Maps

@@ -5,8 +5,8 @@ import testEcharts from '@/components/testEcharts/testEcharts'
 import test from '@/components/test/test'
 import lora from '@/components/lora'
 import parkAdmin from '@/components/parkAdmin'
-// import parkManageDeviceL from '@/components/parkManageDeviceL'
-// import parkManageDeviceC from '@/components/parkManageDeviceC'
+import parkManageDeviceL from '@/components/parkManageDeviceL'
+import parkManageDeviceC from '@/components/parkManageDeviceC'
 import parkManageDeviceR from '@/components/parkManageDeviceR'
 import getPoint from '@/components/getPoint'
 
@@ -39,16 +39,16 @@ export default new Router({
             name: 'parkAdmin',
             component: parkAdmin
         },
-        // {
-        //     path: '/parkManageDeviceL',
-        //     name: 'parkManageDeviceL',
-        //     component: parkManageDeviceL
-        // },
-        // {
-        //     path: '/parkManageDeviceC',
-        //     name: 'parkManageDeviceC',
-        //     component: parkManageDeviceC
-        // },
+        {
+            path: '/parkManageDeviceL',
+            name: 'parkManageDeviceL',
+            component: parkManageDeviceL
+        },
+        {
+            path: '/parkManageDeviceC',
+            name: 'parkManageDeviceC',
+            component: parkManageDeviceC
+        },
         {
             path: '/parkManageDeviceR',
             name: 'parkManageDeviceR',

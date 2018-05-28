@@ -1,15 +1,15 @@
 <template>
-  <!-- <div class='devices' id="devices"  > -->
-      <ul style="width: 100%; height: 100%; padding: 0px; margin: 0px">
-          <li>
-                <p> 园区人流量峰值时间</p>
-                <div>
-                <img class="icon" :src="peakTime" alt="">
-                <span class="text">{{peakCountTime}}</span>
+    <div class="parkManageDeviceR">
+        <ul>
+            <li>
+                <div class="title">园区人流量峰值时间</div>
+                <div class="peopleBox">
+                    <img class="icon" :src="peakTime" alt="">
+                    <span>{{peakCountTime}}</span>
                 </div>
-          </li>
-      </ul>
-  <!-- </div> -->
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -17,68 +17,67 @@ import config from './../common/config/config.js'
 export default {
     data () {
         return {
-            peakCountTime: '10:00', // 园区峰值时间
+            peakCountTime: '00:00', // 园区峰值时间
             peakTime: config.imgConfig.peakTime
         }
     },
     mounted () {
-        // this.getaxios()
-        // setInterval(this.getaxios, 900000) // 15min轮询
+        this.getaxios()
+        setInterval(this.getaxios, 900000) // 15min轮询
     },
     methods: {
         getaxios () {
-            const that = this
-            this.$axios.get('/showData/ruckus/statistics')
-                .then(function (response) {
-                    console.log('接收成功！', response)
-                    console.log('接收成功！', response.data.peakCountTime)
-                    that.peakCountTime = response.data.peakCountTime
-                    console.log(that.peakCountTime)
+            this.$axios.get(config.apiConfig.getPeopleNumber)
+                .then(res => {
+                    console.log('成功——人流量', res)
+                    this.peakCountTime = res.data.data[0].peakCountTime
                 })
-                .catch(function (error) {
-                    console.log('错误', error)
+                .catch(err => {
+                    console.log('失败——人流量', err)
                 })
         }
     }
 }
 </script>
 <style>
-/* body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-} */
-body {
-  font-family: sans-serif;
-}
-/* .devices{
-  background:url(../assets/bg.jpg) no-repeat;
-  background-position: center;
-  background:rgba(211, 160, 160, 0.3);
-} */
-ul{
+.parkManageDeviceR{
     width: 100%;
     height: 100%;
+    color: #fff;
 }
-ul li{
+
+.parkManageDeviceR ul{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+.parkManageDeviceR ul li{
     list-style: none;
     width: 100%;
     height: 100%;
     border: 1px solid rgb(167, 165, 165);
 }
-li p{
+
+.title{
     text-align: left;
-    font-size: 14px;
-    text-indent:3px;
+    margin: 5px 10px;
 }
-img.icon{
-    width: 26px;
-    height: 26px;
-    vertical-align: sub;
+
+.peopleBox{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin: 0 10px 10px;
 }
-span.text{
-    vertical-align: super;
-    font-size: 16px;
+
+.peopleBox .icon{
+    width: 30px;
+    height: 30px;
+}
+
+.peopleBox span{
+    display: inline-block;
+    margin-left: 15px;
 }
 </style>

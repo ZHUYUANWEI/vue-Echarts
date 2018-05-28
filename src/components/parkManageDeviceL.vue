@@ -1,58 +1,51 @@
 <template>
-  <div class='devices' id="devices" :style="{ width:width, height:height, backgroundImage: url(config.imgConfig.computerRoomBottomMap)}" >
-      <ul>
-          <li>
-              <div class="content">
-              <p> 数据中心空调状态</p>
-                    <img v-show="airConditioningStateOn" class="icon" :src=config.imgConfig.airConditioningStateOn alt="">
-                    <img v-show="airConditioningStateOff" class="icon" :src=config.imgConfig.airConditioningStateOff alt="">
-                    <span class="text">{{value[0]}}</span>
-              </div>
-          </li>
-          <li class="none"></li>
-          <li class="none"></li>
-           <li>
-              <div class="content">
-              <p> 数据中心空调设定温度</p>
-                    <img class="icon" :src="config.imgConfig.settingTemperature" alt="">
-                    <span class="text">{{value[1]}}</span>
-              </div>
-          </li>
-           <li>
-              <div class="content">
-              <p> 数据中心空调设定湿度</p>
-                    <img class="icon" :src="config.imgConfig.settingTemperature" alt="">
-                    <span class="text">{{value[2]}}</span>
-              </div>
-          </li>
-          <li class="none"></li>
-          <li class="none"></li>
-           <li>
-             <div class="content">
-              <p> 数据中心空调回风湿度</p>
-                    <img class="icon" :src="config.imgConfig.returnAirHumidity" alt="">
-                    <span class="text">{{value[3]}}</span>
-              </div>
-          </li>
-           <li>
-              <div class="content">
-              <p>数据中心实际温度</p>
-                    <img class="icon" :src="config.imgConfig.actualTemperature" alt="">
-                    <span class="text">{{value[4]}}</span>
-              </div>
-          </li>
-           <li class="none"></li>
-          <li class="none"></li>
-
-           <li>
-             <div class="content">
-              <p> 数据中心实际湿度</p>
-                    <img class="icon" :src="config.imgConfig.actualHumidity" alt="">
-                    <span class="text">{{value[5]}}</span>
-              </div>
-          </li>
-      </ul>
-  </div>
+<div class='parkManageDeviceL' :style="{backgroundImage: 'url(' + computerRoomBottomMap + ')'}" >
+    <ul>
+        <li>
+            <div class="title">数据中心空调状态</div>
+            <div class="peopleBox">
+                <img class="icon" :src="airConStatusImg" alt="">
+                <span>{{airConStatus}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="title">数据中心空调设定温度</div>
+            <div class="peopleBox">
+                <img class="icon" :src="airConTemperatureImg" alt="">
+                <span>{{airConTemperature}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="title">数据中心空调设定湿度</div>
+            <div class="peopleBox">
+                <img class="icon" :src="airConHumidityImg" alt="">
+                <span>{{airConHumidity}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="title">数据中心空调回风湿度</div>
+            <div class="peopleBox">
+                <img class="icon" :src="airConReHumidityImg" alt="">
+                <span>{{airConReHumidity}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="title">数据中心实际温度</div>
+            <div class="peopleBox">
+                <img class="icon" :src="actualTemperatureImg" alt="">
+                <span>{{actualTemperature}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="title">数据中心实际湿度</div>
+            <div class="peopleBox">
+                <img class="icon" :src="actualHumidityImg" alt="">
+                <span>{{actualHumidity}}</span>
+            </div>
+        </li>
+        <div style="clear: both;"></div>
+    </ul>
+</div>
 </template>
 
 <script>
@@ -60,14 +53,20 @@ import config from './../common/config/config.js'
 export default {
     data () {
         return {
-            width: '100%',
-            height: '100%',
-            // maxWidth:'480px',
-            value: [],
-            name: [],
-            // 空调开关状态
-            statusOn: false,
-            statusOff: true
+            computerRoomBottomMap: config.imgConfig.computerRoomBottomMap,
+            airConStatusImg: config.imgConfig.airConditioningState,
+            airConTemperatureImg: config.imgConfig.settingTemperature,
+            airConHumidityImg: config.imgConfig.settingHumidity,
+            airConReHumidityImg: config.imgConfig.returnAirHumidity,
+            actualTemperatureImg: config.imgConfig.actualTemperature,
+            actualHumidityImg: config.imgConfig.actualHumidity,
+
+            airConStatus: '关',
+            airConTemperature: '0℃',
+            airConHumidity: '0%',
+            airConReHumidity: '0%',
+            actualTemperature: '0℃',
+            actualHumidity: '0%'
         }
     },
     mounted () {
@@ -75,78 +74,77 @@ export default {
         setInterval(this.getaxios, 900000) // 15min轮询
     },
     methods: {
-        // getaxios () {
-        //     const that = this
-        //     // 清空数组
-        //     that.name.splice(0, that.name.length)
-        //     that.value.splice(0, that.value.length)
-        //     this.$axios.get('/yuanquguanli')
-        //         .then(function (response) {
-        //             console.log('接收成功！', response)
-        //             console.log('1', response.data.data)
-        //             for (var i = 0; i < response.data.data.length; i++) {
-        //                 that.name.push(response.data.data[i].name) // 循环对象的name
-        //                 that.value.push(response.data.data[i].value) // 循环对象的value
-        //             }
-        //         })
-        //         .catch(function (error) {
-        //             console.log('错误', error)
-        //         })
-        // }
+        getaxios () {
+            this.$axios.get(config.apiConfig.getEnvironmentState)
+                .then(res => {
+                    console.log('成功——数据中心环境状况', res)
+                    this.airConStatus = res.data.data[0].airConStatus
+                    this.airConTemperature = res.data.data[0].airConTemperature
+                    this.airConHumidity = res.data.data[0].airConHumidity
+                    this.airConReHumidity = res.data.data[0].airConStatus
+                    this.actualTemperature = res.data.data[0].actualTemperature
+                    this.actualHumidity = res.data.data[0].actualHumidity
+                })
+                .catch(err => {
+                    console.log('失败——数据中心环境状况', err)
+                })
+        }
     }
 }
 </script>
 <style>
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-body {
-  font-family: sans-serif;
-}
-.devices{
+.parkManageDeviceL{
     width: 100%;
     height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
 
-  /* background:rgba(211, 160, 160, 0.3);     */
-}
-ul{
+.parkManageDeviceL ul{
+    width: 100%;
     height: 100%;
-    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
 }
-ul li{
+.parkManageDeviceL ul li{
     list-style: none;
-    float: left;
     width: 50%;
-    height: 17.3%;
-    background-color: #ffffff40;
-}
-li p{
-    text-align: left;
-    font-size: 14px;
-    text-indent:3px;
-    color: #ffffff;
-}
-li div{
-    width: 100%;
-    height: 78%;
-    border: 1px solid rgb(255, 255, 255);
+    height: 16.66%;
+    border: 1px solid rgb(167, 165, 165);
+    align-items: stretch;
+    box-sizing: border-box;
 }
 
-img.icon{
+.parkManageDeviceL ul li:nth-child(2n-1){
+    margin-right: 1px;
+    float: left;
+}
+
+.parkManageDeviceL ul li:nth-child(2n){
+    margin-left: 1px;
+    float: right;
+}
+
+.title{
+    text-align: left;
+    margin: 5px 10px;
+}
+
+.peopleBox{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin: 0 10px 10px;
+}
+
+.peopleBox .icon{
     width: 30px;
     height: 30px;
-    vertical-align: sub;
-    margin-top: 10px;
 }
-span.text{
-    vertical-align: super;
-    font-size: 16px;
-    margin-left: 10px;
-    color: #ffffff;
+
+.peopleBox span{
+    display: inline-block;
+    margin-left: 15px;
 }
 </style>

@@ -126,8 +126,8 @@ export default {
     mounted () {
         this.getaxios()
         this.getWeather()
-        setInterval(this.getaxios, 60000)
-        setInterval(this.getWeather, 60000)
+        setInterval(this.getaxios, 300000)
+        setInterval(this.getWeather, 3600000)
 
         const that = this
         // 页面缩放时进入该方法:监听window的resize事件．在浏览器窗口变化时再设置下背景图高度．
@@ -143,7 +143,7 @@ export default {
     methods: {
         getaxios () {
             this.num++
-            this.$axios.get('/ruckus-api/metrics/getRealTimeHeatmap')
+            this.$axios.get(config.apiConfig.getHeatmapData)
                 .then(res => {
                     // console.log('成功——人流热力图', res)
                     this.heatmapData = res.data.data.heatmapData
@@ -192,7 +192,7 @@ export default {
                 max: max,
                 data: newPoints
             }
-            console.log('热力图坐标点', data)
+            // console.log('热力图坐标点', data)
             // 重置画布大小
             this.heatmap._renderer.setDimensions(this.widthChange, this.heightChange)
             // 使用数据集初始化
@@ -201,7 +201,7 @@ export default {
 
         // 获取天气预报
         getWeather () {
-            this.$axios.get('/showData/weather')
+            this.$axios.get(config.apiConfig.getWeather)
                 .then(res => {
                     console.log('成功——获取天气预报', res.data)
                     this.weatherData = res.data

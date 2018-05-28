@@ -14,8 +14,7 @@ const imgConfig = {
     },
     // 东方时尚中心大屏展示dome--parkManageDeviceL
     computerRoomBottomMap: require('../images/computerRoomBottomMap.jpg'), // 机房底图
-    airConditioningStateOn: require('../images/airConditioningStateOn.png'), // 空调状态-开
-    airConditioningStateOff: require('../images/airConditioningStateOff.png'), // 空调状态-关
+    airConditioningState: require('../images/airConditioningState.png'), // 空调状态-开
     settingTemperature: require('../images/temperature.png'), // 设定温度
     settingHumidity: require('../images/humidity.png'), // 设定湿度
     returnAirHumidity: require('../images/humidity.png'), // 回风湿度
