@@ -2,7 +2,7 @@
   "name": "vuex1",
   "version": "1.0.0",
   "description": "这是用来测试vuex的项目",
-  "author": "PC-PC\\PC <zhuyuanwei@elink-cn.com>",
+  "author": "朱元伟 <zhuyuanwei@elink-cn.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "echarts": "^4.0.4",
     "heatmap.js": "^2.0.5",
+    "iview": "^2.14.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

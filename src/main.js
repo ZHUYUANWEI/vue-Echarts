@@ -6,6 +6,9 @@ import router from './router'
 import store from './store/store.js'
 import echarts from 'echarts'
 import axios from 'axios'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+Vue.use(iView)
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios

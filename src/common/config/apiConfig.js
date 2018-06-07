@@ -10,7 +10,8 @@ const apiConfig = {
     getWeather: '/showData/weather', // 获取天气预报
 
     getEnvironmentState: '/showData/siteData/airConData', // 数据中心环境状况/showData/siteData/airConData
-    getPeopleNumber: '/showData/siteData/manFlow' // 人流量/showData/siteData/manFlow
+    getPeopleNumber: '/showData/siteData/manFlow', // 人流量/showData/siteData/manFlow
+    apiRealTimeCall: '/apiplatform/display/today' // api实时调用
 }
 
 export default apiConfig

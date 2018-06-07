@@ -8,7 +8,9 @@
     <router-link to="parkManageDeviceC" style="margin:0 10px">parkManageDeviceC</router-link>
     <router-link to="parkManageDeviceR" style="margin:0 10px">parkManageDeviceR</router-link>
     <router-link to="parkAdmin" style="margin:0 10px">parkAdmin</router-link>
-    <router-link to="getPoint" style="margin:0 10px">地图获取坐标点</router-link> -->
+    <router-link to="getPoint" style="margin:0 10px">地图获取坐标点</router-link>
+    <router-link to="apiRealTimeCall" style="margin:0 10px">API实时调用</router-link> -->
+
     <router-view/>
   </div>
 </template>

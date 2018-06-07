@@ -25,6 +25,11 @@ module.exports = {
             '/showData': {
                 target: 'http://192.168.1.66:8080',
                 changeOrigin: true
+            },
+            // 安仲伟
+            '/apiplatform': {
+                target: 'http://192.168.1.71:8080',
+                changeOrigin: true
             }
 
         },
