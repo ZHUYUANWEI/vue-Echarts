@@ -11,7 +11,8 @@ const apiConfig = {
 
     getEnvironmentState: '/showData/siteData/airConData', // 数据中心环境状况/showData/siteData/airConData
     getPeopleNumber: '/showData/siteData/manFlow', // 人流量/showData/siteData/manFlow
-    apiRealTimeCall: '/apiplatform/display/today' // api实时调用
+    apiRealTimeCall: '/apiplatform/display/today', // api实时调用
+    dataLastUpdateTime: '/apiplatform/display/lastreadlog' // 数据最近一次更新时间
 }
 
 export default apiConfig

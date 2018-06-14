@@ -37,13 +37,13 @@
                     </tr>
                     <tr v-for="(item, index) in topSlowList" :key="index">
                         <td>{{ item.apiName }}</td>
-                        <td>{{ item.apiServiceName }}</td>
+                        <td>{{ item.apiUri }}</td>
                         <td>{{ item.requestTime }}</td>
                         <td>{{ item.responseTime }}</td>
                     </tr>
                 </table>
             </div>
-            <h4 class="boxh lastUpdateTime">数据最近一次更新时间：</h4>
+            <h4 class="boxh lastUpdateTime">数据最近一次更新时间：{{ dataLastUpdateTime }}</h4>
         </div>
 
     </div>
@@ -56,7 +56,7 @@ export default {
         return {
             heartBeatStatus: '',
             topSlowList: '',
-            a: ''
+            dataLastUpdateTime: ''
         }
     },
     computed: {
@@ -76,12 +76,21 @@ export default {
                     this.heartBeatStatus = res.data.heartBeatStatus
                     this.topSlowList = res.data.topSlowList
                     this.topSlowList.forEach((item, index, input) => {
-                        this.topSlowList[index].requestTime = config.methodConfig.formatDate('hh:mm:ss', new Date(item.requestTime * 1000))
+                        this.topSlowList[index].requestTime = config.methodConfig.formatDate('hh:mm:ss', new Date(Number(item.requestTime)))
                     })
                 })
                 .catch(err => {
                     console.log('错误-API实时调用', err)
                     // clearInterval(this.a)
+                })
+
+            this.$axios.get(config.apiConfig.dataLastUpdateTime)
+                .then(res => {
+                    console.log('成功-数据最近一次更新时间', res.data)
+                    this.dataLastUpdateTime = config.methodConfig.formatDate('yyyy-MM-dd hh:mm:ss', new Date(res.data))
+                })
+                .catch(err => {
+                    console.log('错误-数据最近一次更新时间', err)
                 })
         }
     }
@@ -111,11 +120,13 @@ export default {
 table {
     width: 100%;
     border-spacing: 0;
+    word-break:break-all;
+    word-wrap:break-word;
 }
 table,
 table tr th,
 table tr td {
-    border: 1px solid #0094ff;
+    border: 1px solid rgba(255,255,255,.5);
 }
 th {
     padding: 12px 0;
